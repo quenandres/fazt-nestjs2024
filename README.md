@@ -40,3 +40,15 @@ nest g co projects
 #Para crear controlador sin archivo de testing
 nest g co projects --no-spec
 ```
+
+#### `Servicios`
+
+Crear Servicio
+
+```bash
+nest generate service projects
+nest generate s projects
+nest g s projects
+#Para crear el servicio sin archivo de testing
+nest g s projects --no-spec
+```

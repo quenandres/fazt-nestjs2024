@@ -52,3 +52,5 @@ nest g s projects
 #Para crear el servicio sin archivo de testing
 nest g s projects --no-spec
 ```
+
+min:48:35

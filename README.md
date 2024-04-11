@@ -73,3 +73,12 @@ createTask(@Body() task: any) {
     return this.tasksService.createTask(task);        
 }
 ```
+
+### Params
+
+```ts
+ @Get('/:id')
+getTask(@Param('id') id: string) {
+    return this.tasksService.getTask(parseInt(id));
+}
+```

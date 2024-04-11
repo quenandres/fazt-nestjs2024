@@ -1,7 +1,7 @@
-import { Controller, Delete, Get, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, Put, Query } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 
-@Controller({})
+@Controller('tasks')
 export class TasksController {
 
     constructor(
@@ -10,33 +10,36 @@ export class TasksController {
         this.tasksService = tasksService
     }
 
-    @Get('tasks')
-    getAllTasks() {
+    @Get()
+    getTasks(@Query() query: any) {
         // Buscar en bd
         // Petición a otro api
-        return this.tasksService.getAllTasks();
+        console.log('query');
+        console.log(query);
+        
+        return this.tasksService.getTasks();
+        
     }
 
-    @Post('/tasks')
-    createTask() {
-        return 'task created'
+    @Post()
+    createTask(@Body() task: any) {
+        console.log(task);
+        return this.tasksService.createTask(task);        
     }
-
     
 
-    @Put('/tasks')// {name: 'task1', status: 'pending'}
+    @Put()// {name: 'task1', status: 'pending'}
     UpdateTask() {
-        return 'task updated'
+        return this.tasksService.UpdateTask();
     }
 
-    @Delete('/tasks')
+    @Delete()
     DeleteTask() {
-        return 'task deleted'
+        return this.tasksService.deleteTask();
     }
 
-    @Patch('/tasks') // {status: 'pending'}
+    @Patch() // {status: 'pending'}
     UpdateTaskStatus() {
-        return 'status patched'
+        return this.tasksService.UpdateTaskStatus();
     }
-    
 }

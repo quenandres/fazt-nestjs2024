@@ -53,4 +53,23 @@ nest g s projects
 nest g s projects --no-spec
 ```
 
-min:48:35
+### Body y query
+
+```ts
+@Get()
+getTasks(@Query() query: any) {
+    // Buscar en bd
+    // Petición a otro api
+    console.log('query');
+    console.log(query);
+    
+    return this.tasksService.getTasks();
+    
+}
+
+@Post()
+createTask(@Body() task: any) {
+    console.log(task);
+    return this.tasksService.createTask(task);        
+}
+```

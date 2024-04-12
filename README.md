@@ -215,3 +215,14 @@ export class ValidateuserPipe implements PipeTransform {
   }
 }
 ```
+
+### `Guards`
+
+
+*Crear un guard*
+
+```bash
+nest g guard hello/guards/auth
+```
+
+Se pueden utilizar para validar sesiones, cabeceras.

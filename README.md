@@ -158,3 +158,60 @@ app.useGlobalPipes(new ValidationPipe({
 
 ### `HTTP STATUS No errors`
 
+Se define el status de la ruta desde el controlador
+
+```ts
+@Get('/somethingnew')
+@HttpCode(201)
+somethingnewPage() {
+    return 'Something new';
+}
+
+@Get('/notfound')
+@HttpCode(404)
+notFoundPage() {
+
+}
+```
+
+### `PIPES`
+
+Procesa algo y devuelve algo diferente
+
+En este caso lo que muestra es que transforma string a enteros y booleanos
+```ts
+@Get('ticket/:num')
+getNumber( @Param('num', ParseIntPipe) num: number ) {
+    return num + 1;
+}
+
+@Get('active/:status')
+isUserActive( @Param('status', ParseBoolPipe) status: boolean ) {
+    console.log(typeof status);
+    return status;
+}
+```
+
+*Crear un pipe*
+
+```bash
+nest g pipe hello/pipes/validateuser
+```
+
+Genera una clase, tiene una función transform en donde ponemos la logica para cambiar lo que necesitamos.
+
+```ts
+import { ArgumentMetadata, HttpException, HttpStatus, Injectable, PipeTransform } from '@nestjs/common';
+
+@Injectable()
+export class ValidateuserPipe implements PipeTransform {
+  transform(value: any, metadata: ArgumentMetadata) {
+    const ageNumber = parseInt(value.age.toString(), 10);
+    if( isNaN(ageNumber) ) {
+      throw new HttpException('Age must be a number', HttpStatus.BAD_REQUEST);
+    }
+
+    return { ...value, age: ageNumber };
+  }
+}
+```

@@ -226,3 +226,76 @@ nest g guard hello/guards/auth
 ```
 
 Se pueden utilizar para validar sesiones, cabeceras.
+
+## `Middlewares`
+
+*Crear un middleware*
+
+```bash
+nest g middleware users/logger
+nest g mi users/logger
+```
+
+#### Middleware a nivel de modulo
+_middleware_
+
+```ts
+import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response } from 'express';
+
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: () => void) {
+    console.log(req.originalUrl);
+    next();
+  }
+}
+```
+
+_modulo_
+
+```ts
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
+import { LoggerMiddleware } from './logger/logger.middleware';
+
+@Module({
+  controllers: [UsersController],
+  providers: [UsersService]
+})
+export class UsersModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('users');
+  }
+}
+
+```
+
+Para usar middleware en rutas especificas
+
+```ts
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
+import { LoggerMiddleware } from './logger/logger.middleware';
+import { AuthMiddleware } from './auth/auth.middleware';
+
+@Module({
+  controllers: [UsersController],
+  providers: [UsersService]
+})
+export class UsersModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+      consumer.apply(LoggerMiddleware).forRoutes({
+        path: 'users',
+        method: RequestMethod.GET
+      }
+    ).apply(AuthMiddleware).forRoutes({
+      path: 'users',
+      method: RequestMethod.POST
+    });
+  }
+}
+
+```

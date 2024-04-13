@@ -299,3 +299,15 @@ export class UsersModule implements NestModule {
 }
 
 ```
+
+### `Resources`
+
+Permite crear recursos de manera mas facil con comandos.
+
+*Crear un resource*
+
+```bash
+nest g resource payments
+```
+
+### `Prisma`

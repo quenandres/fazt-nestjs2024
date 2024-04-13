@@ -311,3 +311,17 @@ nest g resource payments
 ```
 
 ### `Prisma`
+
+### `Swagger`
+https://docs.nestjs.com/openapi/introduction
+
+### `CORS`
+_main.js_
+
+```ts
+app.enableCors();
+```
+
+
+### `Desplegar`
+
